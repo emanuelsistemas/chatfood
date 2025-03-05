@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Sistema SAAS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Botão de alternar tema -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-sun theme-icon-light"></i>
+        <i class="fas fa-moon theme-icon-dark"></i>
+    </div>
+    
+    <!-- Toast container FORA do container principal -->
+    <div id="toast-container"></div>
+    
+    <div class="container">
+        <div class="logo">
+            <div class="logo-icon">
+                <div class="icon-container">
+                    <div class="bot-container">
+                        <i class="bot-icon" data-lucide="bot"></i>
+                        <div class="glow"></div>
+                    </div>
+                    <div class="message-container">
+                        <i class="message-icon" data-lucide="message-circle"></i>
+                    </div>
+                </div>
+            </div>
+            <h1 class="logo-text">ChatFood</h1>
+        </div>
+        
+        <h1>Cadastre-se</h1>
+        <p class="subtitle">Crie sua conta para começar a usar o sistema</p>
+        
+        <form id="signupForm">
+            <div class="form-group">
+                <div id="segmentContainer" class="custom-select-container">
+                    <!-- Select oculto para armazenar o valor -->
+                    <select id="segment" name="segment" style="display: none;" required>
+                        <option value="" disabled selected>Selecione o segmento</option>
+                        <option value="alimentacao">Alimentação</option>
+                        <option value="saude">Saúde</option>
+                        <option value="educacao">Educação</option>
+                        <option value="tecnologia">Tecnologia</option>
+                        <option value="moda">Moda</option>
+                        <option value="servicos">Serviços</option>
+                        <option value="industria">Indústria</option>
+                        <option value="transporte">Transporte</option>
+                        <option value="entretenimento">Entretenimento</option>
+                        <option value="varejo">Varejo</option>
+                    </select>
+                    
+                    <!-- Elemento de UI customizado para o select -->
+                    <div class="custom-select-selected">
+                        <span class="selected-text">Selecione o segmento</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    
+                    <!-- Dropdown com opções e campo de busca -->
+                    <div class="custom-select-dropdown">
+                        <div class="custom-select-search">
+                            <input type="text" id="segmentSearch" placeholder="Pesquisar..." autocomplete="off">
+                        </div>
+                        <div class="custom-select-options">
+                            <div class="custom-select-option" data-value="alimentacao">Alimentação</div>
+                            <div class="custom-select-option" data-value="saude">Saúde</div>
+                            <div class="custom-select-option" data-value="educacao">Educação</div>
+                            <div class="custom-select-option" data-value="tecnologia">Tecnologia</div>
+                            <div class="custom-select-option" data-value="moda">Moda</div>
+                            <div class="custom-select-option" data-value="servicos">Serviços</div>
+                            <div class="custom-select-option" data-value="industria">Indústria</div>
+                            <div class="custom-select-option" data-value="transporte">Transporte</div>
+                            <div class="custom-select-option" data-value="entretenimento">Entretenimento</div>
+                            <div class="custom-select-option" data-value="varejo">Varejo</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="document-type">
+                <div class="document-type-option active" id="cnpjOption">CNPJ</div>
+                <div class="document-type-option" id="cpfOption">CPF</div>
+            </div>
+            
+            <div class="form-group">
+                <input type="text" id="document" name="document" placeholder=" " required>
+                <label for="document">CNPJ</label>
+            </div>
+            
+            <div class="form-group">
+                <input type="text" id="companyName" name="companyName" placeholder=" " required>
+                <label for="companyName">Nome da Empresa</label>
+            </div>
+            
+            <div class="form-group">
+                <input type="email" id="email" name="email" placeholder=" " required>
+                <label for="email">E-mail</label>
+            </div>
+            
+            <div class="form-group">
+                <div class="password-container">
+                    <input type="password" id="password" name="password" placeholder=" " required maxlength="8" pattern="[0-9]{4,8}">
+                    <label for="password">Senha (4-8 dígitos)</label>
+                    <div class="toggle-password" id="togglePassword"><i class="fas fa-eye"></i></div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="password-container">
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder=" " required maxlength="8" pattern="[0-9]{4,8}">
+                    <label for="confirmPassword">Confirme a Senha</label>
+                    <div class="toggle-password" id="toggleConfirmPassword"><i class="fas fa-eye"></i></div>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn">
+                <i class="fas fa-user-plus"></i> Registrar
+            </button>
+        </form>
+        
+        <p class="terms">
+            Já possui uma conta? <a href="login.html" id="loginLink">Faça login aqui</a>
+        </p>
+    </div>
+
+    <script src="js/scripts.js"></script>
+</body>
+</html>

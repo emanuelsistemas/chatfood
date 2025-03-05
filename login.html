@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ChatFood</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Estilos específicos para a página de login */
+        .social-login {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .social-btn {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--input-border);
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .social-btn:hover {
+            background-color: rgba(108, 92, 231, 0.1);
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .social-btn i {
+            font-size: 18px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: var(--label-color);
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: var(--input-border);
+        }
+
+        .divider span {
+            padding: 0 15px;
+            font-size: 14px;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: -10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+        }
+
+        .forgot-password {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Botão de alternar tema -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-sun theme-icon-light"></i>
+        <i class="fas fa-moon theme-icon-dark"></i>
+    </div>
+    
+    <!-- Toast container FORA do container principal -->
+    <div id="toast-container"></div>
+    
+    <div class="container">
+        <div class="logo">
+            <div class="logo-icon">
+                <div class="icon-container">
+                    <div class="bot-container">
+                        <i class="bot-icon" data-lucide="bot"></i>
+                        <div class="glow"></div>
+                    </div>
+                    <div class="message-container">
+                        <i class="message-icon" data-lucide="message-circle"></i>
+                    </div>
+                </div>
+            </div>
+            <h1 class="logo-text">ChatFood</h1>
+        </div>
+        
+        <h1>Bem-vindo de volta</h1>
+        <p class="subtitle">Faça login na sua conta para continuar</p>
+        
+        <div class="social-login">
+            <button class="social-btn">
+                <i class="fab fa-google"></i>
+                Google
+            </button>
+            <button class="social-btn">
+                <i class="fab fa-facebook-f"></i>
+                Facebook
+            </button>
+        </div>
+        
+        <div class="divider">
+            <span>OU</span>
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <input type="email" id="email" name="email" placeholder=" " required>
+                <label for="email">E-mail</label>
+            </div>
+            
+            <div class="form-group">
+                <div class="password-container">
+                    <input type="password" id="password" name="password" placeholder=" " required>
+                    <label for="password">Senha</label>
+                    <div class="toggle-password" id="togglePassword"><i class="fas fa-eye"></i></div>
+                </div>
+            </div>
+            
+            <div class="remember-forgot">
+                <div class="remember-me">
+                    <input type="checkbox" id="rememberMe" name="rememberMe">
+                    <label for="rememberMe">Lembrar-me</label>
+                </div>
+                <a href="#" class="forgot-password">Esqueceu a senha?</a>
+            </div>
+            
+            <button type="submit" class="btn">
+                <i class="fas fa-sign-in-alt"></i> Entrar
+            </button>
+        </form>
+        
+        <p class="terms">
+            Ainda não possui uma conta? <a href="cadastro_empresa.html" id="signupLink">Cadastre-se aqui</a>
+        </p>
+
+        <p class="terms" style="margin-top: 10px;">
+            <a href="index.html" id="homeLink"><i class="fas fa-home"></i> Voltar para a página inicial</a>
+        </p>
+    </div>
+
+    <script src="js/scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializa os ícones do Lucide
+            lucide.createIcons();
+            
+            // Botão de alternar visibilidade da senha
+            const togglePasswordBtn = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            
+            togglePasswordBtn.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                // Atualiza o ícone
+                if (type === 'password') {
+                    this.innerHTML = '<i class="fas fa-eye"></i>';
+                } else {
+                    this.innerHTML = '<i class="fas fa-eye-slash"></i>';
+                }
+            });
+            
+            // Formulário de login
+            const loginForm = document.getElementById('loginForm');
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Aqui você adicionaria a lógica para enviar os dados para o backend
+                
+                // Simulação de login bem-sucedido
+                const email = document.getElementById('email').value;
+                
+                // Mostra um toast de sucesso
+                showToast('success', 'Login realizado com sucesso!');
+                
+                // Redireciona após um breve delay (em produção, redirecionar após resposta do backend)
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            });
+            
+            // Função para exibir toasts (reaproveitada do scripts.js)
+            function showToast(type, message) {
+                const toastContainer = document.getElementById('toast-container');
+                
+                // Cria o elemento toast
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                
+                // Adiciona o ícone baseado no tipo
+                let icon = '';
+                switch(type) {
+                    case 'success':
+                        icon = '<i class="fas fa-check-circle toast-icon"></i>';
+                        break;
+                    case 'error':
+                        icon = '<i class="fas fa-times-circle toast-icon"></i>';
+                        break;
+                    case 'info':
+                        icon = '<i class="fas fa-info-circle toast-icon"></i>';
+                        break;
+                    case 'warning':
+                        icon = '<i class="fas fa-exclamation-triangle toast-icon"></i>';
+                        break;
+                }
+                
+                // Constrói a estrutura do toast
+                toast.innerHTML = `
+                    <div class="toast-content">
+                        ${icon}
+                        <div class="toast-message">${message}</div>
+                    </div>
+                    <div class="toast-close"><i class="fas fa-times"></i></div>
+                    <div class="toast-progress">
+                        <div class="toast-progress-bar"></div>
+                    </div>
+                `;
+                
+                // Adiciona o toast ao container
+                toastContainer.appendChild(toast);
+                
+                // Força um reflow para que a animação funcione
+                void toast.offsetWidth;
+                
+                // Adiciona a classe show para iniciar a animação
+                toast.classList.add('show');
+                
+                // Configura o evento de clique no botão de fechar
+                const closeBtn = toast.querySelector('.toast-close');
+                closeBtn.addEventListener('click', function() {
+                    toast.classList.remove('show');
+                    
+                    // Remove o toast após a animação terminar
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 500);
+                });
+                
+                // Remove automaticamente o toast após 5 segundos
+                setTimeout(() => {
+                    if (toast.parentNode) { // Verifica se o toast ainda existe no DOM
+                        toast.classList.remove('show');
+                        
+                        // Remove o toast após a animação terminar
+                        setTimeout(() => {
+                            if (toast.parentNode) { // Verifica novamente antes de remover
+                                toast.remove();
+                            }
+                        }, 500);
+                    }
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>
